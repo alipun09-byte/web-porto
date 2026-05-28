@@ -1,39 +1,50 @@
-# Deploy ke Netlify (Panduan Singkat)
+# Portofolio Next.js + Netlify
 
-Pilihan cepat untuk meng-deploy situs statis Anda (`index.html` di root):
+Proyek ini sekarang menggunakan Next.js dengan struktur folder yang rapi:
 
-1) Drag & drop (paling cepat)
+- `app/` untuk halaman utama dan layout
+- `components/` untuk komponen UI yang dapat digunakan ulang
+- `data/` untuk semua konten portofolio dalam format JavaScript
+- `public/` untuk aset statis seperti gambar
+- `netlify.toml` untuk konfigurasi build Netlify
 
-- Buka https://app.netlify.com/drop
-- Tarik seluruh folder proyek (`portfolio-web`) ke area upload.
-- Setelah upload selesai, situs langsung aktif di subdomain Netlify.
-
-2) Continuous Deploy via Git (rekomendasi jika ingin update otomatis)
-
-- Buat repository di GitHub dan push kode Anda:
+## Cara menjalankan lokal
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/USERNAME/REPO.git
-git push -u origin main
+npm install
+npm run dev
 ```
 
-- Di Netlify, pilih "New site from Git" → connect Git provider → pilih repo → deploy settings.
-- Karena ini situs statis, `Build command` dikosongkan dan `Publish directory` diisi `.` (root). Atau biarkan Netlify membaca dari `netlify.toml` yang sudah ada.
+Buka `http://localhost:3000` untuk melihat halaman.
 
-3) Menggunakan Netlify CLI (opsional)
+## Build dan deploy
+
+Netlify sudah dikonfigurasi untuk deploy output statis Next.js.
 
 ```bash
-npm install -g netlify-cli
-netlify login
-netlify init    # inisialisasi site pada akun Anda
-netlify deploy --dir=. --prod
+npm run build
 ```
 
-Catatan penting:
-- File konfigurasi Netlify sudah ditambahkan: [netlify.toml](netlify.toml)
-- Jika Anda ingin custom domain atau HTTPS otomatis, atur dari dashboard Netlify setelah site ter-deploy.
-- Ingin saya bantu membuat repository GitHub dan menyiapkan continuous deploy? Balas "buat repo" dan beri nama repo yang diinginkan.
+### Pengaturan Netlify
+
+- `Build command`: `npm run build`
+- `Publish directory`: `out`
+
+Netlify akan menghasilkan folder `out` dari `next export` dan menggunakannya sebagai situs statis.
+
+## Struktur file utama
+
+- `app/layout.js` → HTML global dan metadata
+- `app/page.js` → halaman beranda portofolio
+- `app/globals.css` → gaya global dan responsif
+- `components/Nav.js` → navigasi header mobile-friendly
+- `components/WorkCard.js` → tampilan proyek di bagian Works
+- `data/portfolio.js` → semua teks, gambar, dan daftar konten
+
+## Update otomatis
+
+Jika repo sudah terhubung dengan Netlify, setiap push ke `main` akan memicu build dan deploy otomatis.
+
+## Catatan
+
+File HTML lama disimpan di `legacy/index.html` untuk referensi.
