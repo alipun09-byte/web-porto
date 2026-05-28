@@ -1,0 +1,9 @@
+[build]
+  # Publish the site from the project root (index.html at repository root)
+  publish = "."
+  # No build command for a plain static site. If you add a build step (npm, hugo, etc.), set it here.
+  command = ""
+
+[dev]
+  # Optional: local dev server command used by Netlify Dev. Requires netlify-cli.
+  command = "npx http-server -p 8888"
